@@ -11,5 +11,5 @@ scalaJSUseMainModuleInitializer := true
 
 libraryDependencies ++= Seq(
   "org.scala-js" %%% "scalajs-dom" % "0.9.6",
-  "org.scalaz" %%% "scalaz-zio" % "0.5.3+65-0c7dc2c3-SNAPSHOT"
+  "org.scalaz" %%% "scalaz-zio" % "0.5.3+64-39d1a87b+20190120-0856-SNAPSHOT"
 )

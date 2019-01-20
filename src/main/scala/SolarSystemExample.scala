@@ -1,7 +1,7 @@
 import org.scalajs.dom.document
 import org.scalajs.dom.html.{Canvas, Image}
-import scalaz.zio.{App, IO}
 import scalaz.zio.duration._
+import scalaz.zio.{App, IO, Schedule}
 
 import scala.scalajs.js.Date
 
@@ -13,11 +13,11 @@ object SolarSystemExample extends App {
     earth: Image
   )
 
-  override def run(args: List[String]): IO[Nothing, ExitStatus] =
-    program.map(_ => ExitStatus.ExitNow(0))
-
-  def program: IO[Nothing, Unit] =
-    init flatMap drawLoop
+  override def run(args: List[String]): IO[Nothing, Unit] =
+    for {
+      s <- init
+      _ <- draw(s).repeat(Schedule.fixed(10.millisecond))
+    } yield ()
 
   def init: IO[Nothing, SolarSystem] =
     for {
@@ -26,7 +26,7 @@ object SolarSystemExample extends App {
       earth <- loadImage("https://mdn.mozillademos.org/files/1429/Canvas_earth.png")
     } yield SolarSystem(sun, moon, earth)
 
-  def drawLoop(s: SolarSystem): IO[Nothing, Unit] = {
+  def draw(s: SolarSystem): IO[Nothing, Unit] = {
     for {
       c <- IO.sync { document.getElementById("canvas").asInstanceOf[Canvas].getContext("2d") }
 
@@ -59,9 +59,6 @@ object SolarSystemExample extends App {
       _ <- IO.sync { c.stroke() }
 
       _ <- IO.sync { c.drawImage(s.sun, 0, 0, 300, 300) }
-
-      _ <- IO.sleep(1.millisecond)
-      _ <- drawLoop(s)
     } yield ()
   }
 
