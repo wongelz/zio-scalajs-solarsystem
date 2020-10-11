@@ -10,7 +10,7 @@ scalaVersion := "2.13.0"
 scalaJSUseMainModuleInitializer := true
 
 libraryDependencies ++= Seq(
-  "org.scala-js" %%% "scalajs-dom" % "0.9.7",
-  "dev.zio" %%% "zio" % "1.0.0-RC15",
-  "org.scala-js" %%% "scalajs-java-time" % "0.2.5"
+  "org.scala-js" %%% "scalajs-dom" % "1.1.0",
+  "dev.zio" %%% "zio" % "1.0.3",
+  "org.scala-js" %%% "scalajs-java-time" % "1.0.0"
 )

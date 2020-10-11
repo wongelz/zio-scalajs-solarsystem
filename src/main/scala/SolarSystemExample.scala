@@ -1,7 +1,7 @@
 import org.scalajs.dom.document
 import org.scalajs.dom.html.{Canvas, Image}
 import zio.duration._
-import zio.{App, UIO, ZSchedule}
+import zio.{App, ExitCode, Schedule, UIO}
 
 import scala.scalajs.js.Date
 
@@ -16,8 +16,8 @@ object SolarSystemExample extends App {
   override def run(args: List[String]) =
     for {
       s <- init
-      _ <- draw(s).repeat(ZSchedule.fixed(10.millisecond))
-    } yield 0
+      _ <- draw(s).repeat(Schedule.fixed(10.millisecond))
+    } yield ExitCode.success
 
   def init: UIO[SolarSystem] =
     for {
